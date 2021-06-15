@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://abyss4a.github.io</id>
     <title>小沐屋</title>
-    <updated>2021-06-15T11:39:29.376Z</updated>
+    <updated>2021-06-15T11:59:43.199Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://abyss4a.github.io"/>
     <link rel="self" href="https://abyss4a.github.io/atom.xml"/>
@@ -16,11 +16,11 @@
         <link href="https://abyss4a.github.io/post/sql_task_2/">
         </link>
         <updated>2021-06-15T07:30:24.000Z</updated>
-        <summary type="html"><![CDATA[<p>数据学习笔记TASK1</p>
+        <summary type="html"><![CDATA[<p>数据学习笔记TASK2</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>数据学习笔记TASK1</p>
+        <content type="html"><![CDATA[<p>数据学习笔记TASK2</p>
 <!-- more -->
-<p>本笔记为阿里云天池龙珠计划SQL训练营的学习内容，链接为：https://tianchi.aliyun.com/specials/promotion/aicampsql</p>
+<p>本笔记为阿里云天池龙珠计划SQL训练营的学习内容，链接为：<a href="https://tianchi.aliyun.com/specials/promotion/aicampsql">https://tianchi.aliyun.com/specials/promotion/aicampsql</a></p>
 <h3 id="select语句基础">SELECT语句基础</h3>
 <h4 id="从表中选取数据">从表中选取数据</h4>
 <p><strong>SELECT语句</strong><br>
