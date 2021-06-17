@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://abyss4a.github.io</id>
     <title>小沐屋</title>
-    <updated>2021-06-17T01:56:52.117Z</updated>
+    <updated>2021-06-17T11:34:30.206Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://abyss4a.github.io"/>
     <link rel="self" href="https://abyss4a.github.io/atom.xml"/>
@@ -247,6 +247,41 @@ FROM &lt;表名&gt;；
 <pre><code class="language-SQL">SELECT &lt;列名1&gt;,&lt;列名2&gt;,...
 FROM &lt;表名&gt;
 GROUP BY &lt;列名1&gt;,&lt;列名2&gt;,...;
+</code></pre>
+<p>GROUP BY  子句就像切蛋糕那样将表进行了分组，在GROUP BY 子句中指定的列称为聚合键或者分组列</p>
+<h4 id="聚合键中包含null时">聚合键中包含NULL时</h4>
+<p>会将NULL作为一组特殊数据进行处理</p>
+<h4 id="group-by书写位置">GROUP BY书写位置</h4>
+<p>GROUP BY的子句书写顺序有严格要求，不按要求会导致SQL无法正常执行，目前出现过的字句<strong>书写顺序</strong>为：<br>
+<strong>1. SELECT→ 2.FROM→ 3.WHERE→ 4.GROUP BY</strong><br>
+其中前三项用于筛选数据，GRROUP BY对筛选出的数据进行处理</p>
+<h4 id="在where子句中使用group-by">在WHERE子句中使用GROUP BY</h4>
+<pre><code class="language-SQL">SELECT &lt;列名&gt;
+FROM &lt;表名&gt;
+WHERE &lt;条件&gt;
+GROUP BY &lt;列名&gt;;
+</code></pre>
+<h4 id="常见错误">常见错误</h4>
+<p>在使用聚合函数及GROUP BY子句时，经常出现的错误有：</p>
+<ul>
+<li>在聚合函数的SELECT子句中写了聚合键以外的列，使用COUNT等聚合函数时，SELECT子句中如果出现列名只能时GROUP BY子句中指定的列名（也就是聚合键）</li>
+<li>在GROUP BY子句中使用列的别名，SELECT子句中可以通过AS来指定别名，但在GROUP BY中不能使用别名，因为在DBMS中，SELECT子句在GROUP BY子句后执行</li>
+<li>在WHERE中使用聚合函数，原因是聚合函数的使用前提是结果集已经确定，而WHERE还处于确定结果集的过程中，所以相互矛盾会引发错误，如果向指定条件，可以在SELECT，HAVING（下面马上会讲）以及ORDER BY子句中使用聚合函数</li>
+</ul>
+<h3 id="为聚合结果指定条件">为聚合结果指定条件</h3>
+<h4 id="用having得到特定分组">用HAVING得到特定分组</h4>
+<p>将表使用GROUP BY分组后，怎样才能只取出其中两组<br>
+<img src="https://abyss4a.github.io/post-images/1623897900174.png" alt="" loading="lazy"><br>
+这里WHERE不可行，因为WHERE子句只能指定记录（行）的条件，而不能用来指定组的条件（例如，“数据行数为2行”或者“平均值为500”等）<br>
+可以在GROUP BY后使用HAVING子句<br>
+HAVING的用法类似WHERE</p>
+<h4 id="having特点">HAVING特点</h4>
+<p>HAVING子句用于对分组进行过滤，可以使用数字，聚合函数和GROUP BY中指定的列名（聚合键）</p>
+<pre><code class="language-SQL">-- 数字
+SELECT &lt;列名&gt;， COUNT(*)
+FROM &lt;表名&gt;
+GROUP BY &lt;列名&gt;
+HAVING COUNT(*) = 2;
 </code></pre>
 ]]></content>
     </entry>
