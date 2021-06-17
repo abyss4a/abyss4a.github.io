@@ -6,7 +6,7 @@
 
 <title>SQL_TASK_2 | 小沐屋</title>
 
-<link rel="shortcut icon" href="https://abyss4a.github.io/favicon.ico?v=1623822389721">
+<link rel="shortcut icon" href="https://abyss4a.github.io/favicon.ico?v=1623893745503">
 
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://abyss4a.github.io/styles/main.css">
@@ -77,7 +77,7 @@
             
         </div>
         <div style="text-align: center">
-            <form id="gridea-search-form" style="position: relative" data-update="1623822389721" action="/search/index.html">
+            <form id="gridea-search-form" style="position: relative" data-update="1623893745503" action="/search/index.html">
                 <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
                 <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
             </form>
@@ -258,7 +258,80 @@ AND相当于“并且”，类似数学中的取交集<br>
 OR相当于“或者”，类似数学中的取并集<br>
 如下图所示：<br>
 AND运算符工作效果图<br>
-<img src="https://abyss4a.github.io/post-images/1623756088705.png" alt="" loading="lazy"></p>
+<img src="https://abyss4a.github.io/post-images/1623756088705.png" alt="" loading="lazy"><br>
+OR运算符工作效果图<br>
+<img src="https://abyss4a.github.io/post-images/1623822500551.png" alt="" loading="lazy"></p>
+<h4 id="通过括号优先处理">通过括号优先处理</h4>
+<p><strong>AND运算符优先于OR运算符</strong></p>
+<pre><code class="language-SQL">--通过括号让OR运算符先于AND运算符执行
+SELECT &lt;列名&gt;
+FROM &lt;表名&gt;
+WHERE &lt;条件1&gt;
+AND (&lt;条件2&gt;
+OR &lt;条件3&gt;);
+</code></pre>
+<h4 id="真值表">真值表</h4>
+<p>复杂运算时该怎样理解？<br>
+当碰到条件较复杂的语句时，理解语句含义并不容易，这是可以采用真值表来梳理逻辑关系<br>
+什么是真值？<br>
+NOT、AND、和OR称为逻辑运算符，这里所说的逻辑就是对真值进行操作的意思。真值就是值为真（TRUE）或假（FALSE）其中之一的值<br>
+<strong>AND 运算符</strong>：两侧的真值都为真时返回真，除此之外都返回假<br>
+<strong>OR 运算符</strong>：两侧的真值只要有一个不为假就返回真，只有当其两侧的真值都为假时才返回假<br>
+<strong>NOT运算符</strong>：只是单纯的将真转换为假，将假转换为真<br>
+真值表<br>
+<img src="https://abyss4a.github.io/post-images/1623824746976.png" alt="" loading="lazy"></p>
+<h4 id="含有null时的真值">含有NULL时的真值</h4>
+<p>NULL的真值结果既不为真，也不为假，因为并不知道到这样一个值<br>
+那该如何表示呢？<br>
+这时真值是除真假之外的第三种值——不确定（UNKNOWN）。一般的逻辑运算符并不存在这第三种值，SQL以外的语言也基本上只使用真和假这两种真值。与通常的逻辑运算被称为二值逻辑相对，只有SQL中的逻辑运算被称为三值逻辑<br>
+三值逻辑下的AND和OR真值表为：<br>
+<img src="https://abyss4a.github.io/post-images/1623825045545.png" alt="" loading="lazy"></p>
+<h3 id="对表进行聚合查询">对表进行聚合查询</h3>
+<h4 id="聚合函数">聚合函数</h4>
+<p>SQL中用于汇总的函数叫做聚合函数，以下五个时最常用的聚合函数：</p>
+<ul>
+<li>COUNT：计算表中的记录数（行数）</li>
+<li>SUM：计算表中数值列中数据的合计值</li>
+<li>AVG：计算表中数值列中数据的平均值</li>
+<li>MAX：求出表中任意列中数据的最大值</li>
+<li>MIN：求出表中任意列中数据的最小值</li>
+</ul>
+<pre><code class="language-SQL">-- 计算全部数据的行数（包含NULL）
+SELECT COUNT(*)
+FROM &lt;表名&gt;;
+-- 计算NULL以外数据的行数
+SELECT COUNT(&lt;列名&gt;)
+FROM &lt;表名&gt;;
+-- 计算某一列的合计值
+SELECT SUM(&lt;列名&gt;)
+FROM &lt;表名&gt;;
+-- 计算某一列的平均值
+SELECT AVG(&lt;列名&gt;)
+FROM &lt;表名&gt;;
+-- MAX和MIN也可用于非数值型数据
+SELECT MAX(DATE)
+FROM &lt;表名&gt;;
+</code></pre>
+<h4 id="使用集合函数删除重复值">使用集合函数删除重复值</h4>
+<pre><code class="language-SQL">-- 计算去除重复数据后的数据行数
+SELECT COUNT(DISTINCT &lt;列名&gt;)
+FROM &lt;表名&gt;；
+</code></pre>
+<h4 id="常用法则-2">常用法则</h4>
+<ul>
+<li>COUNT函数的结果根据参数的不同而不同。COUNT（*）会得到包含NULL的数据行数，而COUNT（&lt;列名&gt;）会得到NULL以外的数据行数</li>
+<li>聚合函数会将NULL排除在外，但COUNT（*）例外，并不会排除NULL</li>
+<li>MAX/MIN函数几乎适用于所有数据类型的列，SUM/AVG函数只适用于数值类型的列</li>
+<li>想要计算值的种类时，可以在COUNT函数的参数中使用DISTINCT</li>
+<li>在聚合函数的参数中使用DISTINCT，可以删除重复数据</li>
+</ul>
+<h3 id="对表进行分组">对表进行分组</h3>
+<h4 id="group-by语句">GROUP BY语句</h4>
+<p>之前使用聚合函数都是会整个表的数据进行处理，当你想进行分组汇总时（即：将现有的数据按照某列来汇总统计），GROUP BY 可以帮助你：</p>
+<pre><code class="language-SQL">SELECT &lt;列名1&gt;,&lt;列名2&gt;,...
+FROM &lt;表名&gt;
+GROUP BY &lt;列名1&gt;,&lt;列名2&gt;,...;
+</code></pre>
 
                 </div>
             </article>
