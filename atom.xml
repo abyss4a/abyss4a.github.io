@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://abyss4a.github.io</id>
     <title>小沐屋</title>
-    <updated>2021-06-17T11:53:45.829Z</updated>
+    <updated>2021-06-18T03:06:39.413Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://abyss4a.github.io"/>
     <link rel="self" href="https://abyss4a.github.io/atom.xml"/>
@@ -283,6 +283,19 @@ FROM &lt;表名&gt;
 GROUP BY &lt;列名&gt;
 HAVING COUNT(*) = 2;
 </code></pre>
+<h3 id="对查询结果进行排序">对查询结果进行排序</h3>
+<h4 id="order-by">ORDER BY</h4>
+<p>SQL中的执行结果时随机排列的，当需要按照特定顺序排序时，可以使用ORDER BY子句</p>
+<pre><code class="language-SQL">SELECT &lt;列名1&gt;, &lt;列名2&gt;, &lt;列名3&gt;, ......
+FEOM &lt;表名&gt;
+ORDER BY &lt;排序基准列1&gt;, &lt;&gt;排序基准列2&gt;, ......
+</code></pre>
+<p>默认为升序排列，降序排列为DESC</p>
+<h4 id="order-by中列名可使用别名">ORDER BY中列名可使用别名</h4>
+<p>GROUP BY子句不能使用SELECT子句中定义的别名，但是ORDER BY子句中可以<br>
+SQL在使用HAVING子句时SELECET语句的<strong>执行顺序</strong>为：<br>
+FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY<br>
+其中SELECT的执行顺序在GROUP BY子句之后，ORDER BY子句之前，也就是说，当在ORDET BY中使用别名时，已经知道了SELECT设置的别名存在，但是在GROUP BY中使用别名时还不知道别名的存在，所以<strong>在ORDER BY中可以使用别名，但是在GROUP BY中不能使用别名</strong></p>
 ]]></content>
     </entry>
     <entry>
